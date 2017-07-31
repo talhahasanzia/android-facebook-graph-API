@@ -27,26 +27,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	private String name, surname, imageUrl;
 	private String TAG = "MainActivity";
 	
+	
 	@Override
 	protected void onCreate( Bundle savedInstanceState )
 	{
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.activity_main );
 		
+		
+		
+		
 		Bundle inBundle = getIntent().getExtras();
-		name = inBundle.getString("name");
-		surname = inBundle.getString("surname");
-		imageUrl = inBundle.getString("imageUrl");
+		name = inBundle.getString( "name" );
+		surname = inBundle.getString( "surname" );
+		imageUrl = inBundle.getString( "imageUrl" );
 		
 		
-		TextView nameView = (TextView)findViewById(R.id.nameAndSurname);
-		nameView.setText("" + name + " " + surname);
+		TextView nameView = (TextView) findViewById( R.id.nameAndSurname );
+		nameView.setText( "" + name + " " + surname );
+		
+		
+		
+		
+		
 	}
 	
 	
 	@Override
-	public void onClick(View view) {
-		switch (view.getId()){
+	public void onClick( View view )
+	{
+		switch ( view.getId() )
+		{
+			
+			case R.id.fb_logo:
 			case R.id.share:
 				share();
 				break;
@@ -55,48 +68,64 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 				getPosts();
 				break;
 			
+			
+			
+			case R.id.write:
+				writePost();
+				break;
+			
 			case R.id.logout:
 				logout();
 				break;
 		}
 	}
 	
-	private void share(){
-		shareDialog = new ShareDialog(this);
-		List<String> taggedUserIds= new ArrayList<String>();
-		taggedUserIds.add("{USER_ID}");
-		taggedUserIds.add("{USER_ID}");
-		taggedUserIds.add("{USER_ID}");
+	private void writePost()
+	{
+		
+		startActivity( new Intent( MainActivity.this, WritePostActivity.class ) );
+		
+	}
+	
+	private void share()
+	{
+		shareDialog = new ShareDialog( this );
+		List<String> taggedUserIds = new ArrayList<String>();
+		taggedUserIds.add( "{USER_ID}" );
+		taggedUserIds.add( "{USER_ID}" );
+		taggedUserIds.add( "{USER_ID}" );
 		
 		ShareLinkContent content = new ShareLinkContent.Builder()
-				.setContentUrl( Uri.parse("http://www.sitepoint.com"))
-				.setContentTitle("This is a content title")
-				.setContentDescription("This is a description")
-				.setShareHashtag(new ShareHashtag.Builder().setHashtag("#sitepoint").build())
-				.setPeopleIds(taggedUserIds)
-				.setPlaceId("{PLACE_ID}")
+				.setContentUrl( Uri.parse( "http://www.evilgeniuses.gg" ) )
+				.setShareHashtag( new ShareHashtag.Builder().setHashtag( "#EG" ).setHashtag( " #TI7" ).setHashtag( " #GraphAPISample" ).build() )
+				.setPeopleIds( taggedUserIds )
+				.setPlaceId( "{PLACE_ID}" )
 				.build();
 		
-		shareDialog.show(content);
+		shareDialog.show( content );
 	}
 	
 	
-	private void getPosts(){
+	private void getPosts()
+	{
 		new GraphRequest(
 				AccessToken.getCurrentAccessToken(), "/me/posts", null, HttpMethod.GET,
-				new GraphRequest.Callback() {
-					public void onCompleted(GraphResponse response) {
-						Log.e(TAG,response.toString());
+				new GraphRequest.Callback()
+				{
+					public void onCompleted( GraphResponse response )
+					{
+						Log.e( TAG, response.toString() );
 					}
 				}
 		).executeAsync();
 	}
 	
 	
-	private void logout(){
+	private void logout()
+	{
 		LoginManager.getInstance().logOut();
-		Intent login = new Intent(MainActivity.this, LoginActivity.class);
-		startActivity(login);
+		Intent login = new Intent( MainActivity.this, LoginActivity.class );
+		startActivity( login );
 		finish();
 	}
 }
