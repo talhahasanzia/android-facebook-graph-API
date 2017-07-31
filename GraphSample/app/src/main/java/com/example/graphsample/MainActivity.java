@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -16,6 +17,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +37,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		setContentView( R.layout.activity_main );
 		
 		
-		
-		
 		Bundle inBundle = getIntent().getExtras();
 		name = inBundle.getString( "name" );
 		surname = inBundle.getString( "surname" );
@@ -47,9 +47,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		nameView.setText( "" + name + " " + surname );
 		
 		
+		ImageView imageView = (ImageView) findViewById( R.id.profileImage );
 		
+	
 		
-		
+		Picasso.with(this).load(imageUrl).into(imageView);
 	}
 	
 	
@@ -67,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			case R.id.getPosts:
 				getPosts();
 				break;
-			
 			
 			
 			case R.id.write:

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -52,6 +53,8 @@ public class LoginActivity extends AppCompatActivity
 		loginButton.setReadPermissions( Arrays.asList( "public_profile", "user_posts" ) );
 		
 		
+		Toast.makeText( this, "Trying to sign in...", Toast.LENGTH_SHORT ).show();
+		
 		loginButton.registerCallback( callbackManager, new FacebookCallback<LoginResult>()
 		{
 			@Override
@@ -74,6 +77,7 @@ public class LoginActivity extends AppCompatActivity
 						{
 							userId = object.getString( "id" );
 							profilePicture = new URL( "https://graph.facebook.com/" + userId + "/picture?width=500&height=500" );
+							Log.d( "PROFILE_URL", "url: " + profilePicture.toString() );
 							if ( object.has( "first_name" ) )
 							{
 								firstName = object.getString( "first_name" );
@@ -134,7 +138,8 @@ public class LoginActivity extends AppCompatActivity
 		} );
 		
 		
-		//LoginManager.getInstance().logInWithReadPermissions( this, Arrays.asList( "public_profile", "user_posts" ) );
+		//LoginManager.getInstance().logInWithReadPermissions( LoginActivity.this, Arrays.asList( "public_profile", "user_posts" ) );
+		
 	}
 	
 	

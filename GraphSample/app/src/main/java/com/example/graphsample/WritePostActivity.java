@@ -59,6 +59,8 @@ public class WritePostActivity extends AppCompatActivity implements View.OnClick
 	private void post()
 	{
 		
+		Toast.makeText( this, "Posting to facebook...", Toast.LENGTH_SHORT ).show();
+		
 		
 		String userGeneratedText = postText.getText().toString();
 		
@@ -87,10 +89,24 @@ public class WritePostActivity extends AppCompatActivity implements View.OnClick
 					{
 						public void onCompleted( GraphResponse response )
 						{
+							
+							
 							Log.d( "WritePost", "onCompleted: " + response.getRawResponse() );
 							
+							if ( response != null )
+							{
+								Toast.makeText( WritePostActivity.this, "Posted successfully", Toast.LENGTH_SHORT ).show();
+							}
+							else
+							{
+								Toast.makeText( WritePostActivity.this, "Error posting", Toast.LENGTH_SHORT ).show();
+							}
 							
+							
+							finish();
 						}
+						
+						
 					}
 			).executeAsync();
 			
